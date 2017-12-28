@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="header">
+
+    <!--修改密码表单-->
+    <div class="modal fade" id="form_password_main_update" tabindex="-1" role="dialog" aria-labelledby="addroleLable">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="txt_password_update_header">修改密码信息</h4>
+                </div>
+                <input type="hidden" id="txt_userPassword_id_main_update" th:value="${session.id}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="txt_departmentname">输入原始密码</label>
+                        <input type="text" name="txt_departmentname" class="form-control"
+                               id="txt_password_oldPassword_main_update" placeholder="原始密码" maxlength="18"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_departmentname">输入新密码</label>
+                        <input type="text" name="txt_departmentname" class="form-control"
+                               id="txt_password_newPassword_main_update" placeholder="新密码" maxlength="18"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_departmentname">确认新密码</label>
+                        <input type="text" name="txt_departmentname" class="form-control"
+                               id="txt_password_newPasswordConfirm_main_update" placeholder="确认新密码" maxlength="18"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                    </button>
+                    <button type="button" onclick="updateMainPassword()" id="btn_userPassword_update_save"
+                            class="btn btn-primary"><span
+                            class="glyphicon glyphicon-floppy-disk"></span>保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>A</b>LT</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Admin</b>LTE</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="/framework/adminlte/img/mrtx.jpg" class="user-image" alt="User Image"/>
+
+                            <span class="hidden-xs" th:text="用户"></span>
+                            <span class="hidden-xs"  th:text="${session.username}"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="/framework/adminlte/img/mrtx.jpg" class="img-circle"
+                                     alt="User Image"/>
+                                <p>
+                                    <span th:text="${session.username}"/>
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a class="btn btn-default btn-flat" onclick="showUpdatePasswordMainForm()">修改密码</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a class="btn btn-default btn-flat" onclick="logout()">退出登录</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+</div>
+
+
+
+
+
+
+

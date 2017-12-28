@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fwwb.scoreAnalysis.courseScore.dao.ScoreDAO">
+  <resultMap id="BaseResultMap" type="com.fwwb.scoreAnalysis.courseScore.model.Score">
+    <id column="score_id" jdbcType="INTEGER" property="scoreId" />
+    <result column="score_stu_id" jdbcType="VARCHAR" property="scoreStuId" />
+    <result column="score_course_id" jdbcType="VARCHAR" property="scoreCourseId" />
+    <result column="score_course_name" jdbcType="VARCHAR" property="scoreCourseName" />
+    <result column="score_class_num" jdbcType="INTEGER" property="scoreClassNum" />
+    <result column="score_term_id" jdbcType="INTEGER" property="scoreTermId" />
+    <result column="score_term_name" jdbcType="VARCHAR" property="scoreTermName" />
+    <result column="score_year" jdbcType="INTEGER" property="scoreYear" />
+    <result column="score_term" jdbcType="INTEGER" property="scoreTerm" />
+    <result column="score_course_credit" jdbcType="INTEGER" property="scoreCourseCredit" />
+    <result column="score_course_type" jdbcType="VARCHAR" property="scoreCourseType" />
+    <result column="score_course_score" jdbcType="INTEGER" property="scoreCourseScore" />
+  </resultMap>
+  <resultMap id="ScoreDTOResultMap" type="com.fwwb.scoreAnalysis.courseScore.model.ScoreDTO">
+    <result column="score_stu_id" jdbcType="VARCHAR" property="stuId" />
+    <result property="stuGender" jdbcType="VARCHAR"/>
+    <result property="stuClassName" jdbcType="VARCHAR"/>
+    <result column="score_course_score" jdbcType="INTEGER" property="scoreCourseScore" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    score_id, score_stu_id, score_course_id, score_course_name, score_class_num, score_term_id, 
+    score_term_name, score_year, score_term, score_course_credit, score_course_type, 
+    score_course_score
+  </sql>
+  
+  <select id="getCourseScoreAll" parameterType="map" resultMap="ScoreDTOResultMap">
+  SELECT st.stu_gender AS stuGender, st.stu_class_name AS stuClassName, sc.score_stu_id, sc.score_course_score
+  FROM score AS sc
+  LEFT JOIN student AS st ON st.stu_id = sc.score_stu_id
+  WHERE sc.score_course_name = #{courseName}
+  AND sc.score_term_name = #{termName}
+  AND sc.score_course_type = #{courseType}
+  ORDER BY sc.score_course_score DESC
+</select>
+
+  <select id="getCourseScore" parameterType="map" resultMap="ScoreDTOResultMap">
+    SELECT st.stu_gender AS stuGender, st.stu_class_name AS stuClassName, sc.score_stu_id, sc.score_course_score
+    FROM score AS sc
+    LEFT JOIN student AS st ON st.stu_id = sc.score_stu_id
+    WHERE sc.score_course_name = #{courseName}
+    AND sc.score_term_name = #{termName}
+    AND sc.score_course_type = #{courseType}
+    ORDER BY sc.score_course_score DESC
+  </select>
+
+  <select id="getAllCourse" resultMap="BaseResultMap">
+    SELECT sc.score_course_id, sc.score_course_name, sc.score_course_type, sc.score_course_credit
+    FROM score AS sc
+    GROUP BY sc.score_course_id
+  </select>
+
+  <select id="getCourseInfo" parameterType="map" resultMap="BaseResultMap">
+   SELECT sc.score_course_id, sc.score_course_name, sc.score_course_score
+   FROM score AS sc
+   WHERE sc.score_course_id IN
+    <foreach collection="courseIds" item="item" separator="," index="index" open="(" close=")">
+    #{item,jdbcType=VARCHAR}
+    </foreach>
+    AND sc.score_term_name = #{termName}
+  </select>
+
+</mapper>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="commonJs">
+
+    <!-- jQuery 2.1.4 -->
+    <script src="/framework/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="/framework/jquery/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="/framework/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Morris.js charts -->
+    <script src="/framework/plugins/table/bootstrap-table-niow.js"></script>
+    <script src="/framework/plugins/table/bootstrap-table-zh-CN.js"></script>
+    <!-- AdminLTE App -->
+    <!--<script src="/framework/adminlte/js/app.min.js"></script>-->
+    <script src="/framework/adminlte/js/app.js"></script>
+
+    <script src="/framework/adminlte/js/adminlte.min.js"></script>
+
+</div>
+

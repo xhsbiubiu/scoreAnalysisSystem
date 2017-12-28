@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <div th:include="framework/main/commonStyle :: style"/>
+
+    <script src="/framework/adminlte/js/app.min.js"></script>
+
+    <link rel='stylesheet' href='/framework/assets/css/700.css' />
+    <link rel="stylesheet" href="/framework/assets/css/reset.css"/>
+    <style type="text/css">
+        body{
+            background: url('/framework/image/111.jpg') 0 0 no-repeat;
+            background-size:cover;
+        }
+        .login-box-msg{
+            margin:10px 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #666;
+        }
+        .error{
+            border-color:#dd4b39;
+            color:#dd4b39;
+        }
+        .error-icon{
+            width:20px;
+            margin-right:5px;
+            vertical-align: text-bottom;
+        }
+    </style>
+</head>
+<body style="background-color: #d2d6de">
+<div class="modal fade" id="form_user_add" tabindex="-1" role="dialog" aria-labelledby="addroleLable">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">用户注册</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <!--<label for="txt_departmentname">用户名</label>-->
+                    <input type="text" name="txt_departmentname" class="form-control"
+                           id="txt_user_username_add" placeholder="用户名" maxlength="18"/>
+                </div>
+                <div class="form-group">
+                    <!--<label for="txt_departmentname">密码</label>-->
+                    <input type="password" name="txt_departmentname" class="form-control"
+                           id="txt_user_password_add" placeholder="密码" maxlength="18"/>
+                </div>
+                <div class="form-group">
+                    <!--<label for="txt_departmentname">确认密码</label>-->
+                    <input type="password" name="txt_departmentname" class="form-control"
+                           id="txt_user_passwordConfirm_add" placeholder="确认密码" maxlength="18"/>
+                </div>
+                <div class="form-group">
+                    <!--<label for="txt_parentdepartment">姓名</label>-->
+                    <input type="text" name="txt_parentdepartment" class="form-control"
+                           id="txt_user_name_add" placeholder="姓名" maxlength="18"/>
+                </div>
+                <div class="form-group">
+                    <!--<label for="txt_parentdepartment">性别</label>-->
+                    <select class="form-control" id="txt_user_gender_add">
+                        <option>男</option>
+                        <option>女</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <!--<label for="txt_parentdepartment">手机号</label>-->
+                    <input type="text" name="txt_parentdepartment" class="form-control"
+                           id="txt_user_mobile_add" placeholder="手机号" maxlength="18"/>
+                </div>
+                <div class="form-group">
+                    <!--<label for="txt_parentdepartment">邮箱</label>-->
+                    <input type="text" name="txt_parentdepartment" class="form-control"
+                           id="txt_user_email_add" placeholder="邮箱" maxlength="18"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                </button>
+                <button type="button" onclick="addNewUser()" id="btn_user_save" class="btn btn-primary"><span
+                        class="glyphicon glyphicon-floppy-disk"></span>保存
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="login-box-body" style="border-radius: 5px;box-shadow: 5px 5px 5px 0 #aaa;">
+        <p class="login-box-msg">课程分析系统</p>
+        <div>
+            <div class="form-group has-feedback">
+                <input type="text" id="username" class="form-control" placeholder="用户名">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" id="password" class="form-control" placeholder="密码">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div id="errorMsg" class="error col-offset-xs-2 col-xs-10"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8" style="height: 34px;line-height: 34px;">
+                    <a href="#" id="regist">注册</a>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button id="submit" type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<div th:include="framework/main/commonJs"::commonJs/>
+<script src="/framework/module/user.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $username = $('#username'),$password = $('#password')
+        $("#submit").click(function(){
+            login();
+        });
+
+        function login() {
+            $('#errorMsg').text('');
+            if($username.val().trim() == '') {
+                $username.addClass('error');
+            }
+            if($password.val().trim() == '') {
+                $password.addClass('error');
+            }
+
+            if($username.val().trim() == '' || $password.val().trim() == ''){
+                return;
+            }
+
+            $.post("/login/login",
+                {
+                    username:$username.val(),
+                    password:$password.val()
+                },
+                function (res, status) {
+                    if(status != "success"){
+                        alert("登陆失败，请检查网络和服务器运行情况！");
+                        return;
+                    }
+                    /*if(res.code != 200){
+                        alert(res);
+                        return;
+                    }*/
+                    location.href="/test/courseScore/view";
+                }
+            );
+        }
+    });
+
+</script>
+</html>

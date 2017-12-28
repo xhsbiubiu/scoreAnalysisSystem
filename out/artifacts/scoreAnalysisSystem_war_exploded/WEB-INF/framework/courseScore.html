@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Score Analysis</title>
+    <div th:include="framework/main/commonStyle :: style"/>
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+<div class="wrapper">
+    <div th:include="framework/main/mainHeader :: header"/>
+    <div th:include="framework/main/mainLeft :: left"/>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                成绩分析
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">成绩分析</li>
+            </ol>
+        </section>
+        <section class="content">
+            <!--课程成绩表格-->
+            <div class="col-lg-6 resp-he">
+                <div class="box box-warning resp-he">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-bar-chart-o fa-fw"></i>成绩列表</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="rootScoreToolbar" class="btn-group"><!--onclick就是代表一个动作，换言之就是应该执行一个函数，所以可能应该会对应函数-->
+                            <div class="col-sm-3">
+                                <label>课程名称</label>
+                                <select class="form-control" id="courseName">
+                                    <option>大学数学（1）线性代数</option>
+                                    <option>大学体育-1</option>
+                                    <option>大学数学（1）微积分-1</option>
+                                    <option>大学英语-1</option>
+                                    <option>智能技术（通）</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>学期名称</label>
+                                <select class="form-control" id="termName">
+                                    <option>2011-2012第1学期</option>
+                                    <option>2011-2012第2学期</option>
+                                    <option>2010-2011第2学期</option>
+                                    <option>2010-2011第1学期</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>课程性质</label>
+                                <select class="form-control" id="courseType">
+                                    <option>必</option>
+                                    <option>选</option>
+                                </select>
+                            </div>
+                            <button id="menu_add" onclick="showScoreForm()" type="button" class="btn btn-primary"><span
+                                    class="glyphicon btn-icon"
+                                    aria-hidden="true"></span>查询
+                            </button>
+                        </div>
+                        <table id="table_score"></table>
+                    </div>
+                </div>
+            </div>
+
+                <!--成绩统计表格-->
+                <div class="col-lg-6 resp-he">
+                    <div class="box box-warning resp-he" style="height:50%">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa fa-bar-chart-o fa-fw"></i>成绩统计</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="table_score_count"style="width: 500px;"class="table table-striped table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th align='center'>统计类别</th>
+                                    <th align="center">学号</th>
+                                    <th align="center">分数</th>
+                                </tr>
+                                </thead>
+                                <tbody id="dataTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary resp-he" style="height:50%">
+                        <div id="chart_pie_score" style="height:350px;width:100%;"></div>
+                    </div>
+                </div>
+
+        </section>
+    </div>
+    <div th:include="framework/main/mainBottom :: copyright"/>
+    <div th:include="framework/main/commonJs"::commonJs/>
+    <script type="text/javascript" src="/framework/model/scoreAnalysis.js"></script>
+    <script src="/framework/plugins/echart/echarts.common.min.js"></script>
+
+</div>
+
+</body>
+</html>
